@@ -519,7 +519,7 @@ save_if_interesting(afl_state_t *afl, void *mem, u32 len, u8 fault) {
 
     u8 *mutation_pair = alloc_printf("%s/queue/id:%06u, %s\n", afl->out_dir, afl->queued_items, queue_fn);
 
-    write((int) (fd), mutation_pair, sizeof(u8));
+    write((int) (fd), mutation_pair, sizeof(mutation_pair));
     close(fd);
 
 
