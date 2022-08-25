@@ -514,6 +514,15 @@ save_if_interesting(afl_state_t *afl, void *mem, u32 len, u8 fault) {
     close(fd);
     add_to_queue(afl, queue_fn, len, 0);
 
+    fd = open(alloc_printf("%s/mutation_pair.csv", afl->out_dir), O_WRONLY|O_APPEND, DEFAULT_PERMISSION);
+    if (unlikely(fd < 0)) { PFATAL("Unable to create %s/mutation_pair.csv'", afl->out_dir); }
+
+    u8 *mutation_pair = alloc_printf("%s/queue/id:%06u, %s\n", afl->out_dir, afl->queued_items, queue_fn);
+
+    fwrite(mutation_pair, sizeof(u8), 1 fd);
+    close(fd);
+
+
 #ifdef INTROSPECTION
     if (afl->custom_mutators_count && afl->current_custom_fuzz) {
 
