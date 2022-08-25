@@ -517,7 +517,7 @@ save_if_interesting(afl_state_t *afl, void *mem, u32 len, u8 fault) {
     fd = open(alloc_printf("%s/mutation_pair.csv", afl->out_dir), O_WRONLY | O_APPEND | O_CREAT, DEFAULT_PERMISSION);
     if (unlikely(fd < 0)) { PFATAL("Unable to create %s/mutation_pair.csv'", afl->out_dir); }
 
-    u8 *mutation_pair = alloc_printf("%s, %s\n", afl->queue_cur->fname, queue_fn);
+    u8 *mutation_pair = alloc_printf("%s %s\n", afl->queue_cur->fname, queue_fn);
 
     write((int) (fd), mutation_pair, strlen(mutation_pair));
     close(fd);
