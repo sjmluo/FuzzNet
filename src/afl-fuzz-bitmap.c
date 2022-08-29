@@ -514,7 +514,7 @@ save_if_interesting(afl_state_t *afl, void *mem, u32 len, u8 fault) {
     close(fd);
     add_to_queue(afl, queue_fn, len, 0);
 
-     u8 *mutation_pair_csv_file_name = alloc_printf("%s/mutation_pair.csv", afl->out_dir)
+    u8 *mutation_pair_csv_file_name = alloc_printf("%s/mutation_pair.csv", afl->out_dir);
     fd = open(mutation_pair_csv_file_name, O_WRONLY | O_APPEND | O_CREAT, DEFAULT_PERMISSION);
     if (unlikely(fd < 0)) { PFATAL("Unable to create %s/mutation_pair.csv'", afl->out_dir); }
 
@@ -522,6 +522,8 @@ save_if_interesting(afl_state_t *afl, void *mem, u32 len, u8 fault) {
 
     write((int) (fd), mutation_pair, strlen(mutation_pair));
     close(fd);
+    free(mutation_pair_csv_file_name);
+    free(mutation_pair);
 
 
 #ifdef INTROSPECTION
