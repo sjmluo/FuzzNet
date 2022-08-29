@@ -522,8 +522,8 @@ save_if_interesting(afl_state_t *afl, void *mem, u32 len, u8 fault) {
 
     write((int) (fd), mutation_pair, strlen(mutation_pair));
     close(fd);
-    free(mutation_pair_csv_file_name);
-    free(mutation_pair);
+    ck_free(mutation_pair_csv_file_name);
+    ck_free(mutation_pair);
 
 
 #ifdef INTROSPECTION
